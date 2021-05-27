@@ -21,6 +21,18 @@ try:
         print(naam)
 except:
   print("Er zijn geen recepten gevonden die: " + recept + " noemen")
+  nieuwpagina = requests.get('https://www.ah.be/allerhande/recepten-zoeken?query=' + recept)
+  soep = BeautifulSoup(nieuwpagina.text, 'html.parser')
+
+  voorstellen = []
+  row = soep.find("div",class_="column xxlarge-4 large-6 small-12")
+  player_name = row.find_all('p')
+  for do in player_name:
+    name = do.find('span', class_="line-clamp_root__2z9Ng line-clamp_active__2Jlke card-text_titleText__fr9jI card-text_boldTitle__19dpK")
+    voorstellen.append(name.text)
+
+  print("Hier zijn enkele andere voorstellen: ")
+  print(voorstellen)
 
 
 
